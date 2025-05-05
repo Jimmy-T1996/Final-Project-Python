@@ -104,7 +104,7 @@ def password_gen1():
     user_input2 = Entry(new_window, width=35, border=8)
 
     #In Tkinter, calling functions requires that the 'command=' syntax call the function with the button it is associated with.
-    #'lambda' is required for functions where arguments are passed. Without this, an error will occur. 
+    #'lambda' is required for functions where arguments/parameters are passed. Without this, an error will occur. 
     generate_password = Button(new_window, text="Generate with special characters", bg=btn_bg, fg=btn_fg, font=default_font,
                                 command=lambda: generate_1(user_input1.get(), user_input2.get()))
     generate_password2 = Button(new_window, text="Generate WITHOUT special characters", bg=btn_bg, fg=btn_fg, font=default_font,
@@ -264,20 +264,24 @@ def view_accounts():
         accounts_box.insert("end", f"Title: {t} \nUsername: {u} \nPassword: {p}\n\n")
 
     accounts_box.configure(state="disabled")
-
+#This checks if the user's input can be passed on to the next funxtion.
+#The goal is to convert string numbers and make them into integers.
+#Both user inputs are checked at the same time.
 def generate_1(user_input1, user_input2):
     output.configure(state="normal")
     output.delete("1.0", END)  
-
+    #User_input1 and user_input2 are checked for number values. If not, user is notified.
     if not user_input1.isdigit() or not user_input2.isdigit():
         output.insert("1.0", "A number must be entered", "center")
+    #Numbers are converted here and their appropriate function is called.
     else:
         char_count = int(user_input1)
         password_count = int(user_input2)
+        #Password generator function is given user's inputs as parameters.
         generate_1_2(char_count, password_count)
-
+    #This widget is diabled. The password will appear here
     output.configure(state="disabled")  
-
+#This function is identical to the previous but uses a different set of characters.
 def generate_2(user_input1, user_input2):
     output.configure(state="normal")
     output.delete("1.0", END)  
@@ -366,9 +370,9 @@ def input_function( title_input, username_input, password_input):
                 writer.writerow([title[i], username[i], password[i]])
 
 #The early version of this program used a .txt file called "Passwords.txt". The 'filename' variable is used an argument in several functions.
-# Deleting this argument from the function's arguments will cause an error and halt the program (corrupted encryption). It is not yet clear why this happens.
+# Deleting this variable from the function's arguments will cause an error and halt the program (corrupted encryption). It is not yet clear why this happens.
 #This variable is a work-around but doesn't actually get used. The 'with open' syntax does the actual work of manipulating the csv file.
-#Deleting this variable also doesn't affect the functions with the argument shown.
+#Deleting this variable also doesn't affect the functions with the argument/parameters shown.
 filename = "Password.csv"
 
 #The CSV file has (3) columns for Title, Username, and Passwords. This function reads the CSV file columns.
